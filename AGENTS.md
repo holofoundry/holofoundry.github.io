@@ -47,6 +47,10 @@ npm run dev
 npm run build
 ```
 
+## First Pages publish
+
+Repo Settings → Pages → Source: **GitHub Actions**. Then re-run the deploy workflow (or push to `main`). Until that is set, https://holofoundry.github.io/ will 404 even though `main` has the source and workflow.
+
 ## Child DOX index
 
 Not yet indexed beyond this root — site is a single package.
