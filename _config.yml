@@ -1,0 +1,17 @@
+# Legacy GitHub Pages still runs a Jekyll pass (pages-build-deployment) against this
+# Astro source tree. Exclude app sources so that pass does not choke on .astro files.
+# Publishing is done by .github/workflows/deploy.yml (GitHub Actions), not Jekyll.
+exclude:
+  - src
+  - node_modules
+  - dist
+  - .astro
+  - .github
+  - .vscode
+  - package.json
+  - package-lock.json
+  - astro.config.mjs
+  - tsconfig.json
+  - AGENTS.md
+  - README.md
+  - .env.example

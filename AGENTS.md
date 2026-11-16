@@ -47,9 +47,13 @@ npm run dev
 npm run build
 ```
 
-## First Pages publish
+## Pages publishing
 
-Repo Settings → Pages → Source: **GitHub Actions**. Then re-run the deploy workflow (or push to `main`). Until that is set, https://holofoundry.github.io/ will 404 even though `main` has the source and workflow.
+Real deploys use `.github/workflows/deploy.yml` (Astro → `actions/deploy-pages`).
+
+The workflow also calls the Pages API to keep **Source = GitHub Actions**, which stops the legacy **pages-build-deployment** (Jekyll) check from failing on `.astro` sources. If that API call lacks permission, set Source manually under Settings → Pages.
+
+`public/.nojekyll` is copied into `dist` so GitHub does not apply Jekyll to the published artifact. Root `_config.yml` excludes app sources as a belt-and-braces for any residual Jekyll pass.
 
 ## Child DOX index
 

@@ -9,6 +9,8 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  # Needed so we can pin Pages source to Actions and stop the legacy Jekyll builder
+  administration: write
 
 concurrency:
   group: pages
@@ -21,6 +23,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Ensure Pages uses GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Prefer Actions as the publisher so the legacy Jekyll pages-build-deployment
+          # workflow stops failing on Astro source files.
+          if gh api "repos/${{ github.repository }}/pages" >/tmp/pages.json 2>/dev/null; then
+            gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow
+          else
+            gh api -X POST "repos/${{ github.repository }}/pages" \
+              -f build_type=workflow \
+              -f 'source[branch]=main' \
+              -f 'source[path]=/' || true
+            gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow || true
+          fi
+          gh api "repos/${{ github.repository }}/pages" --jq '{build_type,.status,.html_url}'
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -32,6 +52,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Ensure .nojekyll in dist
+        run: touch dist/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
