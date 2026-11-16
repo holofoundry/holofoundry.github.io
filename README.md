@@ -25,11 +25,7 @@ Set `PUBLIC_FORMSPREE_ID` (see `.env.example`). Without it, the contact page sho
 
 Push to `main`. GitHub Actions builds and deploys via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 
-**One-time setup** (required before the first public publish):
-
-1. Open [repo Settings → Pages](https://github.com/holofoundry/holofoundry.github.io/settings/pages)
-2. Set **Source** to **GitHub Actions**
-3. Re-run the latest **Deploy to GitHub Pages** workflow (Actions tab → workflow → Re-run), or push an empty commit
+**Pages source** must be **GitHub Actions** (not “Deploy from a branch”). Branch/Jekyll publishing fails on this Astro repo and shows up as **pages build and deployment**.
 
 Site URL: https://holofoundry.github.io/
 
