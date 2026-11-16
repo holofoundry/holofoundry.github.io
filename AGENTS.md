@@ -51,9 +51,7 @@ npm run build
 
 Real deploys use `.github/workflows/deploy.yml` (Astro → `actions/deploy-pages`).
 
-The workflow also calls the Pages API to keep **Source = GitHub Actions**, which stops the legacy **pages-build-deployment** (Jekyll) check from failing on `.astro` sources. If that API call lacks permission, set Source manually under Settings → Pages.
-
-`public/.nojekyll` is copied into `dist` so GitHub does not apply Jekyll to the published artifact. Root `_config.yml` excludes app sources as a belt-and-braces for any residual Jekyll pass.
+Set **Settings → Pages → Source = GitHub Actions** so the legacy **pages-build-deployment** (Jekyll) workflow stops. Root `.nojekyll` + `_config.yml` keep any residual Jekyll pass from choking on `.astro` sources; `public/.nojekyll` ships in `dist` for the published artifact.
 
 ## Child DOX index
 
