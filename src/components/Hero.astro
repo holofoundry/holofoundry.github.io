@@ -1,0 +1,57 @@
+---
+import MicroLabel from './MicroLabel.astro';
+import { site } from '../data/site';
+---
+
+<section class="relative flex min-h-[100svh] flex-col overflow-hidden bg-bg pt-16">
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,color-mix(in_srgb,var(--color-accent)_18%,transparent),transparent_55%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div
+    class="pad-x relative z-10 mx-auto grid w-full max-w-[1400px] flex-1 items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8"
+  >
+    <div class="reveal max-w-3xl">
+      <MicroLabel class="mb-6">{site.name}</MicroLabel>
+      <h1 class="display mb-6">
+        Technology that works for <span class="accent-word">people</span>. Not the other way around.
+      </h1>
+      <p class="lead mb-10 max-w-xl">
+        {site.description}
+      </p>
+      <div class="flex flex-wrap items-center gap-4">
+        <a
+          href="/contact"
+          class="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-fg transition-opacity hover:opacity-90"
+        >
+          Start a conversation
+        </a>
+        <a
+          href="/projects"
+          class="text-sm font-semibold text-muted transition-colors hover:text-fg"
+        >
+          See the work →
+        </a>
+      </div>
+    </div>
+
+    <div class="relative mx-auto flex w-full max-w-md items-center justify-center lg:max-w-none">
+      <img
+        src="/holocube.svg"
+        alt=""
+        width="520"
+        height="520"
+        class="holocube-spin w-[min(100%,420px)] drop-shadow-[0_0_60px_color-mix(in_srgb,var(--color-accent)_35%,transparent)] lg:w-[min(100%,520px)]"
+      />
+    </div>
+  </div>
+
+  <div class="pad-x relative z-10 mx-auto mb-10 flex w-full max-w-[1400px] items-end gap-3">
+    <div class="scroll-cue h-10 w-px bg-accent" aria-hidden="true"></div>
+    <span class="micro text-muted! tracking-[0.18em]">Scroll</span>
+  </div>
+
+  <div class="spectrum-line" aria-hidden="true"></div>
+</section>

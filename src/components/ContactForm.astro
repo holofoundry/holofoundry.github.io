@@ -1,0 +1,63 @@
+---
+import { site } from '../data/site';
+
+const formId = site.formspreeId;
+const action = formId ? `https://formspree.io/f/${formId}` : undefined;
+---
+
+{
+  action ? (
+    <form class="mx-auto flex w-full max-w-xl flex-col gap-5" action={action} method="POST">
+      <input type="hidden" name="_subject" value="Holo Foundry contact" />
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="font-medium text-fg">Name</span>
+        <input
+          type="text"
+          name="name"
+          required
+          autocomplete="name"
+          class="rounded-lg border border-white/15 bg-surface px-4 py-3 text-fg outline-none transition focus:border-accent"
+        />
+      </label>
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="font-medium text-fg">Email</span>
+        <input
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          class="rounded-lg border border-white/15 bg-surface px-4 py-3 text-fg outline-none transition focus:border-accent"
+        />
+      </label>
+      <label class="flex flex-col gap-2 text-sm">
+        <span class="font-medium text-fg">What are you working on?</span>
+        <textarea
+          name="message"
+          required
+          rows="6"
+          class="resize-y rounded-lg border border-white/15 bg-surface px-4 py-3 text-fg outline-none transition focus:border-accent"
+        />
+      </label>
+      <button
+        type="submit"
+        class="mt-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-fg transition-opacity hover:opacity-90"
+      >
+        Send message
+      </button>
+    </form>
+  ) : (
+    <div class="mx-auto max-w-xl rounded-lg border border-white/10 bg-surface p-6">
+      <p class="lead !text-base text-muted">
+        Email us at{' '}
+        <a class="font-semibold text-accent underline underline-offset-2" href={`mailto:${site.email}`}>
+          {site.email}
+        </a>
+        . Tell us what you’re working on, what’s broken, or what you’re trying to build.
+      </p>
+      <p class="mt-4 text-sm text-muted">
+        To enable the on-page form, set <code class="text-fg">PUBLIC_FORMSPREE_ID</code> in the
+        environment.
+      </p>
+    </div>
+  )
+}

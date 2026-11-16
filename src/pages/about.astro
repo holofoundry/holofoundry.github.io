@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Chapter from '../components/Chapter.astro';
+import MicroLabel from '../components/MicroLabel.astro';
+
+const offerings = [
+  {
+    title: 'Web applications',
+    body: 'Bespoke tools that replace spreadsheet chaos, brittle legacy portals, and “temporary” workarounds that somehow became critical infrastructure.',
+  },
+  {
+    title: 'AI that earns its keep',
+    body: 'Narrow, high-value applications — not boardroom demos. We design for the people who will live with the system after the pilot ends.',
+  },
+  {
+    title: 'Digital strategy',
+    body: 'Honest options, trade-offs, and sequencing. Sometimes the answer is not more software. We’ll say so.',
+  },
+  {
+    title: 'Public sector delivery',
+    body: 'We know the constraints: procurement, security, change fatigue, and the gap between what was sold and what officers actually need.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Holo Foundry is a technical consultancy building web applications, AI tools, and digital strategies for SMEs and public sector organisations."
+>
+  <Chapter class="pt-28!">
+    <MicroLabel class="mb-6">About</MicroLabel>
+    <h1 class="display mb-8 max-w-4xl">
+      We didn’t set out to start an agency. We set out to do it <span class="accent-word">better</span>.
+    </h1>
+    <div class="max-w-3xl space-y-6 text-[1.35rem] leading-snug text-muted">
+      <p>
+        Holo Foundry was born out of years on both sides of the industry. Inside digital agencies
+        watching how the sausage gets made, and inside public sector organisations watching what
+        happens when it gets delivered.
+      </p>
+      <p>
+        We know exactly where the money goes, why the projects stall, and what gets quietly swept
+        under the rug. We’re not a large agency that learned to talk about humans. We’re a technical
+        consultancy that never forgot them.
+      </p>
+    </div>
+  </Chapter>
+
+  <Chapter invert minHeight={false}>
+    <MicroLabel class="mb-6">Services</MicroLabel>
+    <h2 class="mb-12 max-w-3xl text-4xl font-bold tracking-tight text-invert-fg sm:text-5xl">
+      What we actually sell
+    </h2>
+    <div class="grid gap-10 md:grid-cols-2">
+      {
+        offerings.map((item) => (
+          <article class="border-t border-invert-fg/15 pt-6">
+            <h3 class="mb-3 text-2xl font-semibold tracking-tight text-invert-fg">{item.title}</h3>
+            <p class="text-[1.05rem] leading-snug text-invert-fg/70">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Chapter>
+
+  <Chapter minHeight={false}>
+    <MicroLabel class="mb-6">Operating principles</MicroLabel>
+    <h2 class="mb-10 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+      How we refuse to work
+    </h2>
+    <ul class="max-w-3xl space-y-8 text-[1.2rem] leading-snug text-muted">
+      <li>
+        <strong class="text-fg">No black boxes.</strong> You should understand what you’re buying,
+        what it costs, and what “done” looks like before we write production code.
+      </li>
+      <li>
+        <strong class="text-fg">No hostage codebases.</strong> Documentation, knowledge transfer, and
+        ownership that survives our exit are part of the delivery, not an optional add-on.
+      </li>
+      <li>
+        <strong class="text-fg">No theatre.</strong> Agile ceremonies without outcomes, discovery that
+        confirms the pitch deck, AI pilots that confuse the people who have to use them — we don’t
+        do those on purpose, and we won’t do them by accident if we can help it.
+      </li>
+    </ul>
+    <p class="mt-14">
+      <a
+        href="/contact"
+        class="inline-flex rounded-full bg-accent px-6 py-3 text-sm font-semibold text-fg transition-opacity hover:opacity-90"
+      >
+        Talk to us
+      </a>
+    </p>
+  </Chapter>
+</BaseLayout>

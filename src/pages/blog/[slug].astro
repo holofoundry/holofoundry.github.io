@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Chapter from '../../components/Chapter.astro';
+import MicroLabel from '../../components/MicroLabel.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((p) => !p.data.draft)
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formatted = post.data.pubDate.toLocaleDateString('en-GB', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <Chapter class="pt-28!" minHeight={false}>
+    <p class="mb-8">
+      <a href="/blog" class="text-sm font-semibold text-muted transition-colors hover:text-fg"
+        >← Blog</a
+      >
+    </p>
+    <MicroLabel class="mb-6">Article</MicroLabel>
+    <h1 class="mb-6 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+      {post.data.title}
+    </h1>
+    <p class="mb-12 text-sm text-muted">
+      {post.data.author} · <time datetime={post.data.pubDate.toISOString()}>{formatted}</time>
+    </p>
+    <article class="prose-hf">
+      <Content />
+    </article>
+  </Chapter>
+</BaseLayout>

@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Chapter from '../components/Chapter.astro';
+import MicroLabel from '../components/MicroLabel.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../data/site';
+
+const projects = (await getCollection('projects'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const services = [
+  {
+    eyebrow: '01',
+    title: 'Clarity before commitment',
+    body: 'Before you spend on build, we help you understand what problem you’re actually solving, who for, and whether technology is even the right answer.',
+  },
+  {
+    eyebrow: '02',
+    title: 'Built for the people who’ll use it',
+    body: 'Not for the demo. Not for the pitch deck. For the person who has to open it every single day and get their job done.',
+  },
+  {
+    eyebrow: '03',
+    title: 'Useful AI is rare',
+    body: 'That’s exactly why we focus on it. We cut through the hype to find the narrow, high-value places where AI genuinely changes what’s possible for your organisation.',
+  },
+];
+
+const steps = [
+  {
+    n: '01',
+    title: 'We interrogate the brief',
+    body: 'Most projects fail because the wrong problem got solved. We spend real time with your team understanding what’s actually broken before we propose anything.',
+  },
+  {
+    n: '02',
+    title: 'We tell you what we think',
+    body: 'Including the parts you might not want to hear. Scope, cost, risk, and honest timelines — agreed upfront, not negotiated later.',
+  },
+  {
+    n: '03',
+    title: 'We build in the open',
+    body: 'Short sprints, regular checkpoints, and real users testing real things. If something isn’t working, we’d rather know in week two than week twelve.',
+  },
+  {
+    n: '04',
+    title: 'We leave. Properly',
+    body: 'Full documentation, knowledge transfer, and a codebase your team can own and run without us.',
+  },
+];
+---
+
+<BaseLayout>
+  <Hero />
+
+  <Chapter id="statement">
+    <MicroLabel class="mb-6">No mystery</MicroLabel>
+    <h2 class="display mb-8 max-w-4xl">
+      You’ve probably been <span class="accent-word">here</span> before.
+    </h2>
+    <div class="max-w-3xl space-y-6 text-[1.35rem] leading-snug text-muted md:border-l-[5px] md:border-accent md:pl-8">
+      <p>
+        A six-figure project that nobody uses. A strategy document gathering dust. An AI pilot that
+        impressed the board and confused everyone else. We’re not here to do that to you.
+      </p>
+      <p>
+        Every one of those failures had a moment where someone should have asked a harder question.
+        Who is this actually for? Will they use it? Does it solve the right problem? We’ve made it
+        our entire practice to ask those questions first, loudly, before a single line of code gets
+        written.
+      </p>
+      <p class="font-semibold text-fg">It’s not a methodology. It’s what rigour looks like.</p>
+    </div>
+  </Chapter>
+
+  <Chapter id="what-we-do" minHeight={false}>
+    <MicroLabel class="mb-6">What we do</MicroLabel>
+    <h2 class="mb-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+      Web applications, AI tools, and digital strategy — without the theatre.
+    </h2>
+    <p class="lead mb-16 max-w-2xl">
+      We work with SMEs and public sector organisations who are tired of being over sold and under
+      delivered.
+    </p>
+    <div class="grid gap-12 md:grid-cols-3 md:gap-10">
+      {
+        services.map((item) => (
+          <article>
+            <p class="micro mb-4">{item.eyebrow}</p>
+            <h3 class="mb-3 text-2xl font-semibold tracking-tight text-fg">{item.title}</h3>
+            <p class="text-[1.05rem] leading-snug text-muted">{item.body}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Chapter>
+
+  <Chapter id="how-we-work" invert>
+    <MicroLabel class="mb-6 !text-accent">How we work</MicroLabel>
+    <h2 class="mb-4 max-w-3xl text-4xl font-bold tracking-tight text-invert-fg sm:text-5xl">
+      Every step designed around one question.
+    </h2>
+    <p class="mb-16 max-w-2xl text-xl leading-snug text-invert-fg/70">
+      What does your team actually need from us right now?
+    </p>
+    <ol class="grid gap-10 md:grid-cols-2">
+      {
+        steps.map((step) => (
+          <li class="border-t border-invert-fg/15 pt-6">
+            <p class="micro mb-3">{step.n}</p>
+            <h3 class="mb-3 text-2xl font-semibold tracking-tight text-invert-fg">{step.title}</h3>
+            <p class="text-[1.05rem] leading-snug text-invert-fg/70">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </Chapter>
+
+  <Chapter id="work" minHeight={false}>
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <MicroLabel class="mb-6">Selected work</MicroLabel>
+        <h2 class="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
+          Outcomes, not outputs.
+        </h2>
+      </div>
+      <a href="/projects" class="text-sm font-semibold text-muted transition-colors hover:text-fg">
+        All projects →
+      </a>
+    </div>
+    <ul class="divide-y divide-white/10 border-y border-white/10">
+      {
+        projects.map((project) => (
+          <li>
+            <a
+              href={`/projects/${project.id}`}
+              class="group flex flex-col gap-3 py-8 transition-colors md:flex-row md:items-baseline md:justify-between"
+            >
+              <div class="max-w-3xl">
+                <h3 class="text-2xl font-semibold tracking-tight text-fg group-hover:text-accent">
+                  {project.data.title}
+                </h3>
+                <p class="mt-2 text-muted">{project.data.description}</p>
+              </div>
+              <span class="shrink-0 text-sm font-semibold text-muted group-hover:text-fg">
+                Read →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Chapter>
+
+  <Chapter id="cta" minHeight={false} class="pb-32!">
+    <MicroLabel class="mb-6">Next</MicroLabel>
+    <h2 class="display mb-8 max-w-4xl">
+      If you’re wondering whether we’re the right fit, start with a <span class="accent-word"
+        >conversation</span
+      >.
+    </h2>
+    <p class="lead mb-10 max-w-2xl">
+      We work with a small number of clients at a time. Deliberately. No sales deck. No obligation.
+      Just an honest chat.
+    </p>
+    <a
+      href="/contact"
+      class="inline-flex rounded-full bg-accent px-6 py-3 text-sm font-semibold text-fg transition-opacity hover:opacity-90"
+    >
+      Get in touch
+    </a>
+  </Chapter>
+</BaseLayout>

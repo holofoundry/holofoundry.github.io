@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Chapter from '../../components/Chapter.astro';
+import MicroLabel from '../../components/MicroLabel.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects
+    .filter((p) => !p.data.draft)
+    .map((project) => ({
+      params: { slug: project.id },
+      props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={project.data.title} description={project.data.description}>
+  <Chapter class="pt-28!" minHeight={false}>
+    <p class="mb-8">
+      <a href="/projects" class="text-sm font-semibold text-muted transition-colors hover:text-fg"
+        >← Projects</a
+      >
+    </p>
+    <MicroLabel class="mb-6">Case study</MicroLabel>
+    <h1 class="mb-6 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+      {project.data.title}
+    </h1>
+    <p class="lead mb-8 max-w-3xl">{project.data.description}</p>
+    <div class="mb-14 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted">
+      {
+        project.data.client && (
+          <p>
+            <span class="micro mr-2 inline text-accent">Client</span>
+            {project.data.client}
+          </p>
+        )
+      }
+      {
+        project.data.stack.length > 0 && (
+          <p>
+            <span class="micro mr-2 inline text-accent">Stack</span>
+            {project.data.stack.join(' · ')}
+          </p>
+        )
+      }
+    </div>
+    <article class="prose-hf">
+      <Content />
+    </article>
+  </Chapter>
+</BaseLayout>

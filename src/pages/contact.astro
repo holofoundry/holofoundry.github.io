@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Chapter from '../components/Chapter.astro';
+import MicroLabel from '../components/MicroLabel.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Holo Foundry. Small client list, deliberate conversations, no sales deck."
+>
+  <Chapter class="pt-28!">
+    <MicroLabel class="mb-6">Contact</MicroLabel>
+    <h1 class="display mb-8 max-w-4xl">
+      Get in <span class="accent-word">touch</span>
+    </h1>
+    <p class="lead mb-14 max-w-2xl">
+      We work with a small number of clients at a time. Deliberately. If you’re wondering whether
+      we’re the right fit, the best way to find out is a conversation. Tell us what you’re working
+      on, what’s broken, or what you’re trying to build.
+    </p>
+    <ContactForm />
+    <p class="mt-10 text-sm text-muted">
+      Prefer email? <a class="text-accent underline underline-offset-2" href={`mailto:${site.email}`}
+        >{site.email}</a
+      >
+    </p>
+  </Chapter>
+</BaseLayout>

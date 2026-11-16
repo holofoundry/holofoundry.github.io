@@ -1,0 +1,31 @@
+---
+interface Props {
+  id?: string;
+  invert?: boolean;
+  class?: string;
+  minHeight?: boolean;
+}
+
+const {
+  id,
+  invert = false,
+  class: className,
+  minHeight = true,
+} = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={[
+    'relative pad-x',
+    minHeight ? 'flex min-h-[min(100svh,1080px)] flex-col justify-center py-24' : 'py-24 md:py-32',
+    invert ? 'bg-invert text-invert-fg' : 'bg-bg text-fg',
+    className,
+  ]}
+>
+  <div class="mx-auto w-full max-w-[1400px]">
+    <slot />
+  </div>
+</section>
+
+{!invert && <div class="spectrum-line" aria-hidden="true" />}
